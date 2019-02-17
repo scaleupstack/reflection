@@ -45,6 +45,14 @@ class Reflection
         return self::classCache($className)->reflectionProperty($propertyName);
     }
 
+    public static function propertyOfObject(object $object, string $propertyName) : \ReflectionProperty
+    {
+        return self::propertyOfClass(
+            get_class($object),
+            $propertyName
+        );
+    }
+
     private static function classCache(string $className) : ClassCache
     {
         if (! array_key_exists($className, self::$classCaches)) {

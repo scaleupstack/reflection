@@ -90,4 +90,21 @@ final class ReflectionTest extends TestCase
         // then an instance of ReflectionProperty is returned
         $this->assertInstanceOf(\ReflectionProperty::class, $reflectionProperty);
     }
+
+    /**
+     * @test
+     * @covers ::propertyOfObject()
+     */
+    public function it_retrieves_a_reflection_property_of_an_object()
+    {
+        // given an object and a property name
+        $object = new ReflectionTestObject();
+        $propertyName = 'myPrivateProperty';
+
+        // when retriving the reflection property by object
+        $reflectionProperty = Reflection::propertyOfObject($object, $propertyName);
+
+        // then an instance of ReflectionProperty is returned
+        $this->assertInstanceOf(\ReflectionProperty::class, $reflectionProperty);
+    }
 }
