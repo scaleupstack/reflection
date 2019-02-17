@@ -10,7 +10,7 @@
  * @link      https://github.com/scaleupstack/reflection
  */
 
-namespace ScaleUpStack\Reflection\Cache;
+namespace ScaleUpStack\Reflection;
 
 /**
  * @internal

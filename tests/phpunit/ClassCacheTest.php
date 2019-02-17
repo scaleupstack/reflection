@@ -10,14 +10,13 @@
  * @link      https://github.com/scaleupstack/reflection
  */
 
-namespace ScaleUpStack\Reflection\Tests\Cache;
+namespace ScaleUpStack\Reflection\Tests;
 
-use ScaleUpStack\Reflection\Cache\ClassCache;
+use ScaleUpStack\Reflection\ClassCache;
 use ScaleUpStack\Reflection\Tests\ReflectionTestObject;
-use ScaleUpStack\Reflection\Tests\TestCase;
 
 /**
- * @coversDefaultClass \ScaleUpStack\Reflection\Cache\ClassCache
+ * @coversDefaultClass \ScaleUpStack\Reflection\ClassCache
  */
 final class ClassCacheTest extends TestCase
 {

@@ -12,8 +12,6 @@
 
 namespace ScaleUpStack\Reflection;
 
-use ScaleUpStack\Reflection\Cache\ClassCache;
-
 /**
  * @method static \ReflectionClass classByObject(object $object)
  * @method static \ReflectionProperty propertyOfObject(object $object, string $propertyName)
