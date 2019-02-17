@@ -12,6 +12,17 @@
 
 namespace ScaleUpStack\Reflection\Tests;
 
-final class TestCase extends \PHPUnit\Framework\TestCase
+use ScaleUpStack\Reflection\Reflection;
+
+class TestCase extends \PHPUnit\Framework\TestCase
 {
+    public function tearDown()
+    {
+        $reflectionClass = new \ReflectionClass(Reflection::class);
+
+        $reflectionProperty = $reflectionClass->getProperty('reflectionClasses');
+        $reflectionProperty->setAccessible(true);
+
+        $reflectionProperty->setValue([]);
+    }
 }
