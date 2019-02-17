@@ -18,6 +18,7 @@ use ScaleUpStack\Reflection\Cache\ClassCache;
  * @method static \ReflectionClass classByObject(object $object)
  * @method static \ReflectionProperty propertyOfObject(object $object, string $propertyName)
  * @method static \ReflectionProperty[] allPropertiesOfObject(object $object)
+ * @method static \ReflectionMethod methodOfObject(string $className, string $methodName)
  */
 class Reflection
 {
@@ -53,6 +54,11 @@ class Reflection
         return self::classCache($className)->allReflectionProperties();
     }
 
+    public static function methodOfClass(string $className, string $methodName) : \ReflectionMethod
+    {
+        return self::classCache($className)->reflectionMethod($methodName);
+    }
+
     /**
      * Offers methods that are based on objects instead of class names.
      *
@@ -69,6 +75,7 @@ class Reflection
             'classByObject' => 'classByName',
             'propertyOfObject' => 'propertyOfClass',
             'allPropertiesOfObject' => 'allPropertiesOfClass',
+            'methodOfObject' => 'methodOfClass',
         ];
         if (! array_key_exists($methodName, $mappedMethods)) {
             throw new \Error(
