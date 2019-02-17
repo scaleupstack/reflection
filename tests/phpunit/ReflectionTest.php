@@ -23,6 +23,7 @@ final class ReflectionTest extends TestCase
     /**
      * @test
      * @covers ::classByName()
+     * @covers ::classCache()
      */
     public function it_retrieves_a_reflection_class_by_class_name()
     {
@@ -71,5 +72,22 @@ final class ReflectionTest extends TestCase
             $reflectionClass,
             Reflection::classByName(ReflectionTestObject::class)
         );
+    }
+
+    /**
+     * @test
+     * @covers ::propertyOfClass()
+     */
+    public function it_retrieves_a_reflection_property_by_class_name()
+    {
+        // given a class name and a property name
+        $className = ReflectionTestObject::class;
+        $propertyName = 'myPrivateProperty';
+
+        // when retrieving a reflection property of a class
+        $reflectionProperty = Reflection::propertyOfClass($className, $propertyName);
+
+        // then an instance of ReflectionProperty is returned
+        $this->assertInstanceOf(\ReflectionProperty::class, $reflectionProperty);
     }
 }

@@ -30,11 +30,7 @@ class Reflection
 
     public static function classByName(string $className) : \ReflectionClass
     {
-        if (! array_key_exists($className, self::$classCaches)) {
-            self::$classCaches[$className] = new ClassCache($className);
-        }
-
-        return self::$classCaches[$className]->reflectionClass();
+        return self::classCache($className)->reflectionClass();
     }
 
     public static function classByObject(object $object) : \ReflectionClass
@@ -42,5 +38,19 @@ class Reflection
         return self::classByName(
             get_class($object)
         );
+    }
+
+    public static function propertyOfClass(string $className, string $propertyName) : \ReflectionProperty
+    {
+        return self::classCache($className)->reflectionProperty($propertyName);
+    }
+
+    private static function classCache(string $className) : ClassCache
+    {
+        if (! array_key_exists($className, self::$classCaches)) {
+            self::$classCaches[$className] = new ClassCache($className);
+        }
+
+        return self::$classCaches[$className];
     }
 }
