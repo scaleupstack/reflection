@@ -63,11 +63,27 @@ final class ReflectionTest extends TestCase
         $className = ReflectionTestObject::class;
         $propertyName = 'myPrivateProperty';
 
-        // when retrieving a reflection property of a class
+        // when retrieving a ReflectionProperty of a class
         $reflectionProperty = Reflection::propertyOfClass($className, $propertyName);
 
         // then an instance of ReflectionProperty is returned
         $this->assertInstanceOf(\ReflectionProperty::class, $reflectionProperty);
+    }
+
+    /**
+     * @test
+     * @covers ::allPropertiesOfClass()
+     */
+    public function it_retrievs_all_reflection_properties_by_class_name()
+    {
+        // given a class name
+        $className = ReflectionTestObject::class;
+
+        // when retrieving all ReflectionProperties
+        $allReflectionProperties = Reflection::allPropertiesOfClass($className);
+
+        // then an array of ReflectionProperties is returned
+        $this->assertContainsOnlyInstancesOf(\ReflectionProperty::class, $allReflectionProperties);
     }
 
     public function data_provider_with_object_based_method_name_mapping()
@@ -75,6 +91,7 @@ final class ReflectionTest extends TestCase
         return [
             ['classByObject', 'classByName', []],
             ['propertyOfObject', 'propertyOfClass', ['myPrivateProperty']],
+            ['allPropertiesOfObject', 'allPropertiesOfClass', []],
         ];
     }
 
