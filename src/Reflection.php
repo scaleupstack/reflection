@@ -14,6 +14,10 @@ namespace ScaleUpStack\Reflection;
 
 use ScaleUpStack\Reflection\Cache\ClassCache;
 
+/**
+ * @method static \ReflectionClass classByObject(object $object)
+ * @method static \ReflectionProperty propertyOfObject(object $object, string $propertyName)
+ */
 class Reflection
 {
     /**
@@ -33,24 +37,43 @@ class Reflection
         return self::classCache($className)->reflectionClass();
     }
 
-    public static function classByObject(object $object) : \ReflectionClass
-    {
-        return self::classByName(
-            get_class($object)
-        );
-    }
-
     public static function propertyOfClass(string $className, string $propertyName) : \ReflectionProperty
     {
         return self::classCache($className)->reflectionProperty($propertyName);
     }
 
-    public static function propertyOfObject(object $object, string $propertyName) : \ReflectionProperty
+    /**
+     * Offers methods that are based on objects instead of class names.
+     *
+     * For IDE support, the methods are defined in this class' DocBlock.
+     *
+     * @param string $methodName
+     * @param array  $arguments
+     *
+     * @return mixed
+     */
+    public static function __callStatic(string $methodName, array $arguments)
     {
-        return self::propertyOfClass(
-            get_class($object),
-            $propertyName
+        $mappedMethods = [
+            'classByObject' => 'classByName',
+            'propertyOfObject' => 'propertyOfClass',
+        ];
+        if (! array_key_exists($methodName, $mappedMethods)) {
+            throw new \Error(
+                sprintf(
+                    'Call to undefined method %s::%s()',
+                    static::class,
+                    $methodName
+                )
+            );
+        }
+
+        $methodName = $mappedMethods[$methodName];
+        $className = get_class(
+            array_shift($arguments)
         );
+
+        return self::$methodName($className, ...$arguments);
     }
 
     private static function classCache(string $className) : ClassCache

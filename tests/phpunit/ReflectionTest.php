@@ -55,27 +55,6 @@ final class ReflectionTest extends TestCase
 
     /**
      * @test
-     * @covers ::classByObject()
-     */
-    public function it_retrieves_a_reflection_class_by_object()
-    {
-        // given an object
-        $object = new ReflectionTestObject();
-
-        // when retrieving the reflection class by object
-        $reflectionClass = Reflection::classByObject($object);
-
-        // then an instance of ReflectionClass is returned
-        $this->assertInstanceOf(\ReflectionClass::class, $reflectionClass);
-        // and the instance is the same as if retrieved by class name
-        $this->assertSame(
-            $reflectionClass,
-            Reflection::classByName(ReflectionTestObject::class)
-        );
-    }
-
-    /**
-     * @test
      * @covers ::propertyOfClass()
      */
     public function it_retrieves_a_reflection_property_by_class_name()
@@ -91,20 +70,62 @@ final class ReflectionTest extends TestCase
         $this->assertInstanceOf(\ReflectionProperty::class, $reflectionProperty);
     }
 
+    public function data_provider_with_object_based_method_name_mapping()
+    {
+        return [
+            ['classByObject', 'classByName', []],
+            ['propertyOfObject', 'propertyOfClass', ['myPrivateProperty']],
+        ];
+    }
+
     /**
      * @test
-     * @covers ::propertyOfObject()
+     * @dataProvider data_provider_with_object_based_method_name_mapping
+     * @covers ::__callStatic
      */
-    public function it_retrieves_a_reflection_property_of_an_object()
+    public function it_supports_virtual_methods_to_work_with_objects_instead_of_class_names(
+        string $objectBasedMethodName,
+        string $classBasedMethodName,
+        array $parameters
+    )
     {
-        // given an object and a property name
-        $object = new ReflectionTestObject();
-        $propertyName = 'myPrivateProperty';
+        // given an object based method name, a class based method name,
+        // and the required parameters as provided by the parameters
 
-        // when retriving the reflection property by object
-        $reflectionProperty = Reflection::propertyOfObject($object, $propertyName);
+        // when calling the two methods (based on class name, and object)
+        $resultByClassName = call_user_func(
+            [Reflection::class, $classBasedMethodName],
+            ... array_merge(
+                    [ReflectionTestObject::class],
+                    $parameters
+            )
+        );
+        $resultByObject = call_user_func(
+            [Reflection::class, $objectBasedMethodName],
+            ... array_merge(
+                    [new ReflectionTestObject()],
+                    $parameters
+            )
+        );
 
-        // then an instance of ReflectionProperty is returned
-        $this->assertInstanceOf(\ReflectionProperty::class, $reflectionProperty);
+        // then the results are the same
+        $this->assertSame($resultByClassName, $resultByObject);
+    }
+
+    /**
+     * @test
+     * @covers ::__callStatic
+     */
+    public function it_throws_an_error_on_unknown_static_methods()
+    {
+        // given a not supported method name
+        $methodName = 'notSupported';
+
+        // when calling the method
+        // then an exception is thrown
+        $this->expectException(\Error::class);
+        $this->expectExceptionMessage('Call to undefined method ScaleUpStack\Reflection\Reflection::notSupported()');
+
+        Reflection::$methodName();
     }
 }
