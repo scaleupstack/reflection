@@ -14,5 +14,11 @@ namespace ScaleUpStack\Reflection\Tests;
 
 class ReflectionTestObject
 {
+    private $firstProperty = 'just relevant for sorting of all properties';
+
     private $myPrivateProperty = 'some private value';
+
+    protected $myProtectedProperty = 'some protected value';
+
+    public $myLastAndPublicProperty = 'and last, some public value';
 }

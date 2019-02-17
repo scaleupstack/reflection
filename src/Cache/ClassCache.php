@@ -26,6 +26,8 @@ class ClassCache
      */
     private $properties = [];
 
+    private $allPropertiesLoaded = false;
+
     public function __construct(string $className)
     {
         $this->className = $className;
@@ -44,5 +46,30 @@ class ClassCache
         }
 
         return $this->properties[$propertyName];
+    }
+
+    /**
+     * @return \ReflectionProperty[]
+     */
+    public function allReflectionProperties() : array
+    {
+        if (! $this->allPropertiesLoaded) {
+            $allProperties = [];
+
+            foreach ($this->reflectionClass->getProperties() as $reflectionProperty) {
+                $propertyName = $reflectionProperty->getName();
+
+                if (array_key_exists($propertyName, $this->properties)) {
+                    $reflectionProperty = $this->properties[$propertyName];
+                }
+
+                $allProperties[$propertyName] = $reflectionProperty;
+            }
+
+            $this->properties = $allProperties;
+            $this->allPropertiesLoaded = true;
+        }
+
+        return $this->properties;
     }
 }

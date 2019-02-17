@@ -69,4 +69,34 @@ final class ClassCacheTest extends TestCase
         // and both instances are the same
         $this->assertSame($reflectionProperty1, $reflectionProperty2);
     }
+
+    /**
+     * @test
+     * @covers ::allReflectionProperties()
+     */
+    public function it_retrieves_all_reflection_properties_and_cares_about_previous_loaded_properties()
+    {
+        // given a ClassCache as provided in setUp()
+        // and having loaded a ReflectionProperty previously
+        $previouslyLoadedReflectionProperty = $this->classCache->reflectionProperty('myPrivateProperty');
+
+        // when retrieving all ReflectionProperties
+        $allReflectionProperties = $this->classCache->allReflectionProperties();
+
+        // then all ReflectionProperties are in the correct ordering
+        $this->assertSame(
+            [
+                'firstProperty',
+                'myPrivateProperty',
+                'myProtectedProperty',
+                'myLastAndPublicProperty',
+            ],
+            array_keys($allReflectionProperties)
+        );
+        // and the previously loaded ReflectionProperty is the same as in the complete list
+        $this->assertSame(
+            $previouslyLoadedReflectionProperty,
+            $allReflectionProperties['myPrivateProperty']
+        );
+    }
 }
