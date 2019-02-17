@@ -36,7 +36,7 @@ final class ClassCacheTest extends TestCase
      * @covers ::__construct()
      * @covers ::reflectionClass()
      */
-    public function it_retrieves_the_reflection_class()
+    public function it_retrieves_the_reflection_class_of_a_class()
     {
         // given a class name
         $className = ReflectionTestObject::class;
@@ -98,5 +98,25 @@ final class ClassCacheTest extends TestCase
             $previouslyLoadedReflectionProperty,
             $allReflectionProperties['myPrivateProperty']
         );
+    }
+
+    /**
+     * @test
+     * @covers ::reflectionMethod()
+     */
+    public function it_retrieves_a_reflection_method()
+    {
+        // given a ClassCache as provided in setUp()
+        // and a method name
+        $methodName = 'getMyPrivateProperty';
+
+        // when retrieving a ReflectionMethod twice
+        $reflectionMethod1 = $this->classCache->reflectionMethod($methodName);
+        $reflectionMethod2 = $this->classCache->reflectionMethod($methodName);
+
+        // then an instance of RefelectionMethod is returned
+        $this->assertInstanceOf(\ReflectionMethod::class, $reflectionMethod1);
+        // and both instances are the same
+        $this->assertSame($reflectionMethod1, $reflectionMethod2);
     }
 }

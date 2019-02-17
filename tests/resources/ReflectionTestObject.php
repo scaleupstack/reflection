@@ -21,4 +21,9 @@ class ReflectionTestObject
     protected $myProtectedProperty = 'some protected value';
 
     public $myLastAndPublicProperty = 'and last, some public value';
+
+    public function getMyPrivateProperty() : string
+    {
+        return $this->myPrivateProperty;
+    }
 }

@@ -24,9 +24,11 @@ class ClassCache
     /**
      * @var \ReflectionProperty[]
      */
-    private $properties = [];
+    private $reflectionProperties = [];
 
     private $allPropertiesLoaded = false;
+
+    private $reflectionMethods = [];
 
     public function __construct(string $className)
     {
@@ -41,11 +43,11 @@ class ClassCache
 
     public function reflectionProperty(string $propertyName) : \ReflectionProperty
     {
-        if (! array_key_exists($propertyName, $this->properties)) {
-            $this->properties[$propertyName] = $this->reflectionClass->getProperty($propertyName);
+        if (! array_key_exists($propertyName, $this->reflectionProperties)) {
+            $this->reflectionProperties[$propertyName] = $this->reflectionClass->getProperty($propertyName);
         }
 
-        return $this->properties[$propertyName];
+        return $this->reflectionProperties[$propertyName];
     }
 
     /**
@@ -59,17 +61,26 @@ class ClassCache
             foreach ($this->reflectionClass->getProperties() as $reflectionProperty) {
                 $propertyName = $reflectionProperty->getName();
 
-                if (array_key_exists($propertyName, $this->properties)) {
-                    $reflectionProperty = $this->properties[$propertyName];
+                if (array_key_exists($propertyName, $this->reflectionProperties)) {
+                    $reflectionProperty = $this->reflectionProperties[$propertyName];
                 }
 
                 $allProperties[$propertyName] = $reflectionProperty;
             }
 
-            $this->properties = $allProperties;
+            $this->reflectionProperties = $allProperties;
             $this->allPropertiesLoaded = true;
         }
 
-        return $this->properties;
+        return $this->reflectionProperties;
+    }
+
+    public function reflectionMethod(string $methodName) : \ReflectionMethod
+    {
+        if (! array_key_exists($methodName, $this->reflectionMethods)) {
+            $this->reflectionMethods[$methodName] = $this->reflectionClass->getMethod($methodName);
+        }
+
+        return $this->reflectionMethods[$methodName];
     }
 }
