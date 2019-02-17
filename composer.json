@@ -1,0 +1,35 @@
+{
+    "name": "scaleupstack/reflection",
+    "description": "A stand-alone, performance improved way to deal with PHP Reflection classes.",
+    "type": "library",
+    "keywords": [
+        "reflection",
+        "cache",
+        "caching",
+        "performance"
+    ],
+    "autoload": {
+        "psr-4": {
+            "ScaleUpStack\\Reflection\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ScaleUpStack\\Reflection\\Tests\\": ["tests/phpunit/", "tests/resources/", "tests/fixtures/"]
+        }
+    },
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Thomas Nunninger",
+            "email": "thomas.nunninger@scaleupventures.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.0",
+        "scaleupstack/assert": "^1."
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7."
+    }
+}
