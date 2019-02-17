@@ -20,7 +20,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     {
         $reflectionClass = new \ReflectionClass(Reflection::class);
 
-        $reflectionProperty = $reflectionClass->getProperty('reflectionClasses');
+        $reflectionProperty = $reflectionClass->getProperty('classCaches');
         $reflectionProperty->setAccessible(true);
 
         $reflectionProperty->setValue([]);

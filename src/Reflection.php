@@ -12,9 +12,14 @@
 
 namespace ScaleUpStack\Reflection;
 
+use ScaleUpStack\Reflection\Cache\ClassCache;
+
 class Reflection
 {
-    private static $reflectionClasses = [];
+    /**
+     * @var ClassCache[]
+     */
+    private static $classCaches = [];
 
     /**
      * @codeCoverageIgnore
@@ -25,10 +30,10 @@ class Reflection
 
     public static function classByName(string $className) : \ReflectionClass
     {
-        if (! array_key_exists($className, self::$reflectionClasses)) {
-            self::$reflectionClasses[$className] = new \ReflectionClass($className);
+        if (! array_key_exists($className, self::$classCaches)) {
+            self::$classCaches[$className] = new ClassCache($className);
         }
 
-        return self::$reflectionClasses[$className];
+        return self::$classCaches[$className]->reflectionClass();
     }
 }
