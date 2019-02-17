@@ -69,6 +69,27 @@ class Reflection
     }
 
     /**
+     * @return mixed
+     */
+    public static function getPropertyValue(object $object, string $propertyName)
+    {
+        return self::classCache(get_class($object))
+            ->reflectionProperty($propertyName)
+            ->getValue($object);
+    }
+
+    /**
+     * @param mixed $value
+     * @return void
+     */
+    public static function setPropertyValue(object $object, string $propertyName, $value)
+    {
+        self::classCache(get_class($object))
+            ->reflectionProperty($propertyName)
+            ->setValue($object, $value);
+    }
+
+    /**
      * Offers methods that are based on objects instead of class names.
      *
      * For IDE support, the methods are defined in this class' DocBlock.

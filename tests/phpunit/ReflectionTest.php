@@ -119,6 +119,51 @@ final class ReflectionTest extends TestCase
         $this->assertContainsOnlyInstancesOf(\ReflectionMethod::class, $allReflectionMethods);
     }
 
+    /**
+     * @test
+     * @covers ::setPropertyValue()
+     * @covers ::getPropertyValue()
+     */
+    public function it_gets_and_sets_properties_of_an_object_when_property_was_fetched_alone()
+    {
+        // given an object, a property name, and a new value
+        $object = new ReflectionTestObject();
+        $propertyName = 'myPrivateProperty';
+        $newValue = 'some new value';
+
+        // when setting the value of a property
+        Reflection::setPropertyValue($object, $propertyName, $newValue);
+
+        // then the value is changed
+        $this->assertSame(
+            $newValue,
+            Reflection::getPropertyValue($object, $propertyName)
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function it_gets_and_sets_properties_of_an_object_when_all_properties_were_fetched()
+    {
+        // given an object, a property name, a new value,
+        $object = new ReflectionTestObject();
+        $propertyName = 'myPrivateProperty';
+        $newValue = 'some new value';
+        // and all properties fetched before
+        Reflection::allPropertiesOfClass(ReflectionTestObject::class);
+
+        // when setting the value of a property
+        Reflection::setPropertyValue($object, $propertyName, $newValue);
+
+        // then the value is changed
+        $this->assertSame(
+            $newValue,
+            Reflection::getPropertyValue($object, $propertyName)
+        );
+    }
+
+
     public function data_provider_with_object_based_method_name_mapping()
     {
         return [

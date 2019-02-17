@@ -50,6 +50,7 @@ class ClassCache
     {
         if (! array_key_exists($propertyName, $this->reflectionProperties)) {
             $this->reflectionProperties[$propertyName] = $this->reflectionClass->getProperty($propertyName);
+            $this->reflectionProperties[$propertyName]->setAccessible(true);
         }
 
         return $this->reflectionProperties[$propertyName];
@@ -67,6 +68,7 @@ class ClassCache
 
             foreach ($this->reflectionClass->getProperties() as $reflectionProperty) {
                 $propertyName = $reflectionProperty->getName();
+                $reflectionProperty->setAccessible(true);
 
                 if (array_key_exists($propertyName, $this->reflectionProperties)) {
                     $reflectionProperty = $this->reflectionProperties[$propertyName];
