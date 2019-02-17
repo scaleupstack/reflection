@@ -14,5 +14,5 @@ namespace ScaleUpStack\Reflection\Tests;
 
 class ReflectionTestObject
 {
-
+    private $myPrivateProperty = 'some private value';
 }

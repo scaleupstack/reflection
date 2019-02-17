@@ -12,11 +12,19 @@
 
 namespace ScaleUpStack\Reflection\Cache;
 
+/**
+ * @internal
+ */
 class ClassCache
 {
     private $className;
 
     private $reflectionClass;
+
+    /**
+     * @var \ReflectionProperty[]
+     */
+    private $properties = [];
 
     public function __construct(string $className)
     {
@@ -27,5 +35,14 @@ class ClassCache
     public function reflectionClass() : \ReflectionClass
     {
         return $this->reflectionClass;
+    }
+
+    public function reflectionProperty(string $propertyName) : \ReflectionProperty
+    {
+        if (! array_key_exists($propertyName, $this->properties)) {
+            $this->properties[$propertyName] = $this->reflectionClass->getProperty($propertyName);
+        }
+
+        return $this->properties[$propertyName];
     }
 }

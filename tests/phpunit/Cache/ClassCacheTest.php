@@ -22,6 +22,16 @@ use ScaleUpStack\Reflection\Tests\TestCase;
 final class ClassCacheTest extends TestCase
 {
     /**
+     * @var ClassCache
+     */
+    private $classCache;
+
+    public function setUp()
+    {
+        $this->classCache = new ClassCache(ReflectionTestObject::class);
+    }
+
+    /**
      * @test
      * @covers ::__construct()
      * @covers ::reflectionClass()
@@ -38,5 +48,25 @@ final class ClassCacheTest extends TestCase
 
         // then an instance of ReflectionClass is returned
         $this->assertInstanceOf(\ReflectionClass::class, $reflectionClass);
+    }
+
+    /**
+     * @test
+     * @covers ::reflectionProperty()
+     */
+    public function it_retrieves_a_reflection_property()
+    {
+        // given a ClassCache as provided in setUp()
+        // and a property name
+        $propertyName = 'myPrivateProperty';
+
+        // when retrieving a ReflectionProperty twice
+        $reflectionProperty1 = $this->classCache->reflectionProperty($propertyName);
+        $reflectionProperty2 = $this->classCache->reflectionProperty($propertyName);
+
+        // then an instance of ReflectionProperty is returned
+        $this->assertInstanceOf(\ReflectionProperty::class, $reflectionProperty1);
+        // and both instances are the same
+        $this->assertSame($reflectionProperty1, $reflectionProperty2);
     }
 }
