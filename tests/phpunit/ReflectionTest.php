@@ -29,7 +29,7 @@ final class ReflectionTest extends TestCase
         // given a class name
         $className = ReflectionTestObject::class;
 
-        // when retrieving the reflection class
+        // when retrieving the reflection class by class name
         $reflectionClass = Reflection::classByName($className);
 
         // then an instance of ReflectionClass is returned
@@ -50,5 +50,26 @@ final class ReflectionTest extends TestCase
 
         // then the both instances are the same
         $this->assertSame($reflectionClass1, $reflectionClass2);
+    }
+
+    /**
+     * @test
+     * @covers ::classByObject()
+     */
+    public function it_retrieves_a_reflection_class_by_object()
+    {
+        // given an object
+        $object = new ReflectionTestObject();
+
+        // when retrieving the reflection class by object
+        $reflectionClass = Reflection::classByObject($object);
+
+        // then an instance of ReflectionClass is returned
+        $this->assertInstanceOf(\ReflectionClass::class, $reflectionClass);
+        // and the instance is the same as if retrieved by class name
+        $this->assertSame(
+            $reflectionClass,
+            Reflection::classByName(ReflectionTestObject::class)
+        );
     }
 }

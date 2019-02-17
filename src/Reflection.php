@@ -36,4 +36,11 @@ class Reflection
 
         return self::$classCaches[$className]->reflectionClass();
     }
+
+    public static function classByObject(object $object) : \ReflectionClass
+    {
+        return self::classByName(
+            get_class($object)
+        );
+    }
 }
