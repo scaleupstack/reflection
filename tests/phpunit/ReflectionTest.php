@@ -103,6 +103,22 @@ final class ReflectionTest extends TestCase
         $this->assertInstanceOf(\ReflectionMethod::class, $reflectionMethod);
     }
 
+    /**
+     * @test
+     * @covers ::allMethodsOfClass()
+     */
+    public function it_retrieves_all_reflection_methods_by_class_name()
+    {
+        // given a class name
+        $className = ReflectionTestObject::class;
+
+        // when retrieving all ReflectionMethods
+        $allReflectionMethods = Reflection::allMethodsOfClass($className);
+
+        // then an array of ReflectionMethods is returned
+        $this->assertContainsOnlyInstancesOf(\ReflectionMethod::class, $allReflectionMethods);
+    }
+
     public function data_provider_with_object_based_method_name_mapping()
     {
         return [
@@ -110,6 +126,7 @@ final class ReflectionTest extends TestCase
             ['propertyOfObject', 'propertyOfClass', ['myPrivateProperty']],
             ['allPropertiesOfObject', 'allPropertiesOfClass', []],
             ['methodOfObject', 'methodOfClass', ['getMyPrivateProperty']],
+            ['allMethodsOfObject', 'allMethodsOfClass', []]
         ];
     }
 

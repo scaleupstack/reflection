@@ -18,7 +18,8 @@ use ScaleUpStack\Reflection\Cache\ClassCache;
  * @method static \ReflectionClass classByObject(object $object)
  * @method static \ReflectionProperty propertyOfObject(object $object, string $propertyName)
  * @method static \ReflectionProperty[] allPropertiesOfObject(object $object)
- * @method static \ReflectionMethod methodOfObject(string $className, string $methodName)
+ * @method static \ReflectionMethod methodOfObject(object $object, string $methodName)
+ * @method static \ReflectionMethod[] allMethodsOfObject(object $object)
  */
 class Reflection
 {
@@ -60,6 +61,16 @@ class Reflection
     }
 
     /**
+     * @return \ReflectionMethod[]
+     *         Contrary to `\ReflectionClass->getMethods()` the keys of the returned array are the method names
+     *         instead of integers.
+     */
+    public static function allMethodsOfClass(string $className) : array
+    {
+        return self::classCache($className)->allReflectionMethods();
+    }
+
+    /**
      * Offers methods that are based on objects instead of class names.
      *
      * For IDE support, the methods are defined in this class' DocBlock.
@@ -76,6 +87,7 @@ class Reflection
             'propertyOfObject' => 'propertyOfClass',
             'allPropertiesOfObject' => 'allPropertiesOfClass',
             'methodOfObject' => 'methodOfClass',
+            'allMethodsOfObject' => 'allMethodsOfClass',
         ];
         if (! array_key_exists($methodName, $mappedMethods)) {
             throw new \Error(
