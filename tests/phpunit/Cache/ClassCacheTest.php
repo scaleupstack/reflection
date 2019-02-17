@@ -74,7 +74,7 @@ final class ClassCacheTest extends TestCase
      * @test
      * @covers ::allReflectionProperties()
      */
-    public function it_retrieves_all_reflection_properties_and_cares_about_previous_loaded_properties()
+    public function it_retrieves_all_reflection_properties_and_cares_about_previously_loaded_properties()
     {
         // given a ClassCache as provided in setUp()
         // and having loaded a ReflectionProperty previously
@@ -118,5 +118,33 @@ final class ClassCacheTest extends TestCase
         $this->assertInstanceOf(\ReflectionMethod::class, $reflectionMethod1);
         // and both instances are the same
         $this->assertSame($reflectionMethod1, $reflectionMethod2);
+    }
+
+    /**
+     * @test
+     * @covers ::allReflectionMethods()
+     */
+    public function it_retrieves_all_reflection_methods_and_cares_about_previously_loaded_methods()
+    {
+        // given a ClassCache as provided in setUp()
+        // and having loaded a ReflectionMethod previously
+        $previouslyLoadedReflectionMethod = $this->classCache->reflectionMethod('getMyPrivateProperty');
+
+        // when retrieving all ReflectionMethods
+        $allReflectionMethods = $this->classCache->allReflectionMethods();
+
+        // then all ReflectionMethods are in the correct ordering
+        $this->assertSame(
+            [
+                'setFirstProperty',
+                'getMyPrivateProperty',
+            ],
+            array_keys($allReflectionMethods)
+        );
+        // and the previously loaded ReflectionMethod is the same as in the complete list
+        $this->assertSame(
+            $previouslyLoadedReflectionMethod,
+            $allReflectionMethods['getMyPrivateProperty']
+        );
     }
 }

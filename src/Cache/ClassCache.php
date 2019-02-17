@@ -28,7 +28,12 @@ class ClassCache
 
     private $allPropertiesLoaded = false;
 
+    /**
+     * @var \ReflectionMethod[]
+     */
     private $reflectionMethods = [];
+
+    private $allMethodsLoaded = false;
 
     public function __construct(string $className)
     {
@@ -52,6 +57,8 @@ class ClassCache
 
     /**
      * @return \ReflectionProperty[]
+     *         Contrary to `\ReflectionClass->getProperties()` the keys of the returned array are the property names
+     *         instead of integers.
      */
     public function allReflectionProperties() : array
     {
@@ -82,5 +89,34 @@ class ClassCache
         }
 
         return $this->reflectionMethods[$methodName];
+    }
+
+
+    /**
+     * @return \ReflectionMethod[]
+     *         Contrary to `\ReflectionClass->getMethods()` the keys of the returned array are the method names
+     *         instead of integers.
+     */
+    public function allReflectionMethods() : array
+    {
+        if (! $this->allMethodsLoaded) {
+            $allMethods = [];
+
+            foreach ($this->reflectionClass->getMethods() as $reflectionMethod) {
+                $methodName = $reflectionMethod->getName();
+
+                if (array_key_exists($methodName, $this->reflectionMethods)) {
+                    $reflectionMethod = $this->reflectionMethods[$methodName];
+                }
+
+                $allMethods[$methodName] = $reflectionMethod;
+
+            }
+
+            $this->reflectionMethods = $allMethods;
+            $this->allMethodsLoaded = true;
+        }
+
+        return $this->reflectionMethods;
     }
 }
