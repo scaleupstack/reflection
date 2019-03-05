@@ -52,14 +52,14 @@ The public API of this package is presented via the `Reflection` class. All meth
 * Methods to acces the values of object properties:
 
   ```php
-  Reflection::getPropertyValue(object $object, string $propertyName)
+  Reflection::getPropertyValue(object $object, string $propertyName) : mixed
   Reflection::setPropertyValue(object $object, string $propertyName, $value)
   ```
 
 
 ## Current State
 
-This library is work-in-progress, but the public API should be very stable. Before releasing a 1.0 version, I'd like to add some features that I need in another library.
+This library is work-in-progress, but the public API should be very stable.
 
 Handling of some Reflection features that could benefit from caching (e.g. getting the parent class) are not implemented yet. Some of those features will probably follow soon as needed when developing my other library. But I do not strive for completeness. If you are missing some features, just create a pull request or ask for it, explaining your context/needs.
 
