@@ -14,7 +14,7 @@ This library provides a performance-improved, and convenient way to deal with PH
 Use [Composer] to install this library:
 
 ```
-$ composer require scaleupventures/reflection
+$ composer require scaleupstack/reflection
 ```
 
 
