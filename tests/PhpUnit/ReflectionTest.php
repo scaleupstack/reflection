@@ -10,10 +10,11 @@
  * @link      https://github.com/scaleupstack/reflection
  */
 
-namespace ScaleUpStack\Reflection\Tests;
+namespace ScaleUpStack\Reflection\Tests\PhpUnit;
 
 use ScaleUpStack\Reflection\Reflection;
-use ScaleUpStack\Reflection\Tests\TestCase;
+use ScaleUpStack\Reflection\Tests\Resources\ReflectionTestObject;
+use ScaleUpStack\Reflection\Tests\Resources\TestCase;
 
 /**
  * @coversDefaultClass \ScaleUpStack\Reflection\Reflection

@@ -15,7 +15,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "ScaleUpStack\\Reflection\\Tests\\": ["tests/phpunit/", "tests/resources/", "tests/fixtures/"]
+            "ScaleUpStack\\Reflection\\Tests\\": "tests/"
         }
     },
     "license": "BSD-3-Clause",

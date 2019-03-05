@@ -10,7 +10,7 @@
  * @link      https://github.com/scaleupstack/reflection
  */
 
-namespace ScaleUpStack\Reflection\Tests;
+namespace ScaleUpStack\Reflection\Tests\Resources;
 
 use ScaleUpStack\Reflection\Reflection;
 
