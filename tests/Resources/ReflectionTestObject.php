@@ -22,6 +22,8 @@ class ReflectionTestObject
 
     public $myLastAndPublicProperty = 'and last, some public value';
 
+    private static $someStaticProperty = 'my static value';
+
     public function setFirstProperty($value)
     {
         $this->firstProperty = $value;

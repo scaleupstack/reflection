@@ -90,6 +90,7 @@ final class ClassCacheTest extends TestCase
                 'myPrivateProperty',
                 'myProtectedProperty',
                 'myLastAndPublicProperty',
+                'someStaticProperty',
             ],
             array_keys($allReflectionProperties)
         );

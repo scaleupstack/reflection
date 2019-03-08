@@ -164,6 +164,27 @@ final class ReflectionTest extends TestCase
         );
     }
 
+    /**
+     * @test
+     * @covers ::getStaticPropertyValue()
+     * @covers ::setStaticPropertyValue()
+     */
+    public function it_sets_and_gets_static_properties()
+    {
+        // given a class name, a property name, and a new value to set
+        $className = ReflectionTestObject::class;
+        $propertyName = 'someStaticProperty';
+        $newValue = 42;
+
+        // when setting the static property
+        Reflection::setStaticPropertyValue($className, $propertyName, $newValue);
+
+        // then the property value was set and can be retrieved
+        $this->assertSame(
+            $newValue,
+            Reflection::getStaticPropertyValue($className, $propertyName)
+        );
+    }
 
     public function data_provider_with_object_based_method_name_mapping()
     {
