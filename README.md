@@ -49,11 +49,13 @@ The public API of this package is presented via the `Reflection` class. All meth
 
   Please note that `classByObject()` returns a `\ReflectionClass` and not a `\ReflectionObject`.
 
-* Methods to acces the values of object properties:
+* Methods to acces the values of object or static class properties:
 
   ```php
   Reflection::getPropertyValue(object $object, string $propertyName) : mixed
-  Reflection::setPropertyValue(object $object, string $propertyName, $value)
+  Reflection::setPropertyValue(object $object, string $propertyName, $value) : void
+  Reflection::getStaticPropertyValue(string $className, string $propertyName) : mixed
+  Reflection::setStaticPropertyValue(string $className, string $propertyName, $value) : void
   ```
 
 
