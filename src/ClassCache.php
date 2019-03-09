@@ -88,6 +88,7 @@ class ClassCache
     {
         if (! array_key_exists($methodName, $this->reflectionMethods)) {
             $this->reflectionMethods[$methodName] = $this->reflectionClass->getMethod($methodName);
+            $this->reflectionMethods[$methodName]->setAccessible(true);
         }
 
         return $this->reflectionMethods[$methodName];
