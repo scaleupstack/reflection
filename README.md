@@ -3,11 +3,10 @@
 
 This library provides a performance-improved, and convenient way to deal with PHP Reflection classes.
 
-* **Performance:** Reflection is slow if you instantiate it continuously. If you rely on reflection heavily to inspect the same type of classes in one request over and over again (e.g. in an ORM scenario), then caching of the created Reflection classes helps a lot.
+* **Performance:** Reflection is slow if you instantiate it continuously. If you rely on reflection heavily to inspect the same type of classes in one request over and over again, then caching of the created Reflection classes helps a lot.
 
 * **Convenience:** Instead of dealing with the object graph of Reflection classes, a facade offers convenient methods to retrieve PHP Reflection classes, and getting/setting (non-public) properties of an object.
 
-**Note:** Please, do not abuse this library to bypass your object design, or to validate the state of your System Under Test (SUT) in unit tests.
 
 ## Installation
 
@@ -53,8 +52,9 @@ The public API of this package is presented via the `Reflection` class. All meth
 
   ```php
   Reflection::getPropertyValue(object $object, string $propertyName) : mixed
-  Reflection::setPropertyValue(object $object, string $propertyName, $value) : void
   Reflection::getStaticPropertyValue(string $className, string $propertyName) : mixed
+
+  Reflection::setPropertyValue(object $object, string $propertyName, $value) : void
   Reflection::setStaticPropertyValue(string $className, string $propertyName, $value) : void
   ```
 
@@ -70,7 +70,7 @@ The public API of this package is presented via the `Reflection` class. All meth
 
 This library is work-in-progress, but the public API should be very stable.
 
-Handling of some Reflection features that could benefit from caching (e.g. getting the parent class) are not implemented yet. Some of those features will probably follow soon as needed when developing my other library. But I do not strive for completeness. If you are missing some features, just create a pull request or ask for it, explaining your context/needs.
+Handling of some Reflection features that could (perhaps?) benefit from caching (e.g. getting the parent class) are not implemented yet. But I do not strive for completeness. If you are missing some features, just create a pull request or ask for it, explaining your context/needs.
 
 
 ## Contribute
