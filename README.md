@@ -60,7 +60,7 @@ The public API of this package is presented via the `Reflection` class. All meth
 
 * Methods to invoke static and non-static methods:
 
-  ```
+  ```php
   Reflection::invokeMethod(object $object, string $methodName, array $arguments) : mixed
   Reflection::invokeStaticMethod(string $className, string $methodName, array $arguments) : mixed
   ```
