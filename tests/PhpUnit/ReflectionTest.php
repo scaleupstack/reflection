@@ -186,6 +186,42 @@ final class ReflectionTest extends TestCase
         );
     }
 
+    /**
+     * @test
+     * @covers ::invokeMethod()
+     */
+    public function it_invokes_methods()
+    {
+        // given an object, a method name, and the required arguments
+        $object = new ReflectionTestObject();
+        $methodName = 'returnArgument';
+        $arguments = ['returnMe'];
+
+        // when invoking the method on the object
+        $result = Reflection::invokeMethod($object, $methodName, $arguments);
+
+        // then the return value of the method is returned
+        $this->assertSame('returnMe', $result);
+    }
+
+    /**
+     * @test
+     * @covers ::invokeStaticMethod()
+     */
+    public function it_invokes_static_methods()
+    {
+        // given a class name, a method name, and the required arguments
+        $className= ReflectionTestObject::class;
+        $methodName = 'returnArgument';
+        $arguments = ['returnMe'];
+
+        // when invoking the static method
+        $result = Reflection::invokeStaticMethod($className, $methodName, $arguments);
+
+        // then the return value of the method is returned
+        $this->assertSame('returnMe', $result);
+    }
+
     public function data_provider_with_object_based_method_name_mapping()
     {
         return [

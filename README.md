@@ -25,7 +25,7 @@ The public API of this package is presented via the `Reflection` class. All meth
 * Namespace
 
   ```php
-  use ScaleUpVentures\Reflection\Reflection;
+  use ScaleUpStack\Reflection\Reflection;
   ```
 
 * Methods to retrieve PHP Reflection objects via class name or object:
@@ -49,13 +49,20 @@ The public API of this package is presented via the `Reflection` class. All meth
 
   Please note that `classByObject()` returns a `\ReflectionClass` and not a `\ReflectionObject`.
 
-* Methods to acces the values of object or static class properties:
+* Methods to access the values of object or static class properties:
 
   ```php
   Reflection::getPropertyValue(object $object, string $propertyName) : mixed
   Reflection::setPropertyValue(object $object, string $propertyName, $value) : void
   Reflection::getStaticPropertyValue(string $className, string $propertyName) : mixed
   Reflection::setStaticPropertyValue(string $className, string $propertyName, $value) : void
+  ```
+
+* Methods to invoke static and non-static methods:
+
+  ```
+  Reflection::invokeMethod(object $object, string $methodName, array $arguments) : mixed
+  Reflection::invokeStaticMethod(string $className, string $methodName, array $arguments) : mixed
   ```
 
 
@@ -68,7 +75,7 @@ Handling of some Reflection features that could benefit from caching (e.g. getti
 
 ## Contribute
 
-Thanks that you want to contribute to ScaleUpVentures/Reflection.
+Thanks that you want to contribute to ScaleUpStack/Reflection.
 
 * Report any bugs or issues on the [issue tracker].
 

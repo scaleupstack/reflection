@@ -33,4 +33,9 @@ class ReflectionTestObject
     {
         return $this->myPrivateProperty;
     }
+
+    public static function returnArgument(string $argument)
+    {
+        return $argument;
+    }
 }

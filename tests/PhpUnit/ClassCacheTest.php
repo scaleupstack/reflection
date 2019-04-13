@@ -139,6 +139,7 @@ final class ClassCacheTest extends TestCase
             [
                 'setFirstProperty',
                 'getMyPrivateProperty',
+                'returnArgument',
             ],
             array_keys($allReflectionMethods)
         );

@@ -111,6 +111,26 @@ class Reflection
     }
 
     /**
+     * @return mixed
+     */
+    public static function invokeMethod(object $object, string $methodName, array $arguments)
+    {
+        return self::classCache(get_class($object))
+            ->reflectionMethod($methodName)
+            ->invoke($object, ... $arguments);
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function invokeStaticMethod(string $className, string $methodName, array $arguments)
+    {
+        return self::classCache($className)
+            ->reflectionMethod($methodName)
+            ->invoke(null, ... $arguments);
+    }
+
+    /**
      * Offers methods that are based on objects instead of class names.
      *
      * For IDE support, the methods are defined in this class' DocBlock.
