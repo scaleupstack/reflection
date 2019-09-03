@@ -5,7 +5,11 @@ This library provides a performance-improved, and convenient way to deal with PH
 
 * **Performance:** Reflection is slow if you instantiate it continuously. If you rely on reflection heavily to inspect the same type of classes in one request over and over again, then caching of the created Reflection classes helps a lot.
 
-* **Convenience:** Instead of dealing with the object graph of Reflection classes, a facade offers convenient methods to retrieve PHP Reflection classes, and getting/setting (non-public) properties of an object.
+* **Convenience:** Instead of dealing with the object graph of Reflection classes, a facade offers convenient methods to
+
+  * retrieve PHP Reflection classes,
+  * getting/setting static and non-static properties of an object or class,
+  * invoking static and non-static methods of an object or class.
 
 
 ## Installation
@@ -19,7 +23,7 @@ $ composer require scaleupstack/reflection
 
 ## Usage
 
-The public API of this package is presented via the `Reflection` class. All methods of the `Reflection` class are static. (In fact, it is not possible to instantiate it.)
+The public API of this package is available via the `ScaleUpStack\Reflection\Reflection` class. All methods of the `Reflection` class are static. (In fact, it is not possible to instantiate it.)
 
 * Namespace
 
@@ -48,7 +52,7 @@ The public API of this package is presented via the `Reflection` class. All meth
 
   Please note that `classByObject()` returns a `\ReflectionClass` and not a `\ReflectionObject`.
 
-* Methods to access the values of object or static class properties:
+* Methods to access static and non-static properties:
 
   ```php
   Reflection::getPropertyValue(object $object, string $propertyName) : mixed
@@ -68,7 +72,7 @@ The public API of this package is presented via the `Reflection` class. All meth
 
 ## Current State
 
-This library is work-in-progress, but the public API should be very stable.
+This library is stable.
 
 Handling of some Reflection features that could (perhaps?) benefit from caching (e.g. getting the parent class) are not implemented yet. But I do not strive for completeness. If you are missing some features, just create a pull request or ask for it, explaining your context/needs.
 

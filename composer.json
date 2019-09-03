@@ -1,6 +1,6 @@
 {
     "name": "scaleupstack/reflection",
-    "description": "A performance-improved, and convenient way to deal with PHP Reflection classes.",
+    "description": "A performance-improved and convenient way to deal with PHP Reflection.",
     "type": "library",
     "keywords": [
         "reflection",
